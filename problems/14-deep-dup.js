@@ -37,6 +37,25 @@ console.log(x[0] === y[0]) // true
 ***********************************************************************/
 
 // your code here
+function deepDup(arr) {
+  if (arr.length === 0) return [];
+  
+  let firstEl 
+  if (Array.isArray(arr[0])) { // if first element is an array, making good copy of it 
+    firstEl = deepDup(arr[0])
+  } else {
+    firstEl = arr[0]          // if it is not an array, just taking copy of element. Wrapping arrays will differ
+  }
+  
+  return [firstEl].concat(deepDup(arr.slice(1))) // result is already different 1st element concat different copy of the rest
+}
+//let arr = [1]
+let arr = [[1], [2, [3]]];
+duped = deepDup(arr); // [[1], [2, [3]]]
+console.log(duped);
+console.log(arr[0], duped[0], arr[0] === duped[0]) // false
+console.log(arr[1], duped[1], arr[1] === duped[1]) // false
+console.log(arr[1][1], duped[1][1], arr[1][1] === duped[1][1]) // false
 
 /**************DO NOT MODIFY ANYTHING UNDER THIS LINE*****************/
 try {

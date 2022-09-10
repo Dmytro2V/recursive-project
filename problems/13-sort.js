@@ -23,7 +23,17 @@ sort([]); // []
 
 function sort(nums, sorted = []) {
   // your code here
+  if (nums.length === 0) return sorted;
+
+  let min = Math.min(...nums);
+  let iMin = nums.indexOf(min);
+  sorted = sorted.concat(nums.splice(iMin, 1)); // or sorted.push(...nums.splice)
+  return sort(nums, sorted)
 }
+
+console.log(sort([4,1,6,3,1,7])); // [1, 1, 3, 4, 6, 7]
+sort([0, 1, -3]); // [-3, 0, 1]
+sort([]); // []
 
 /**************DO NOT MODIFY ANYTHING UNDER THIS LINE*****************/
 try {

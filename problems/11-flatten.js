@@ -14,7 +14,7 @@ flatten([1, [2, [3]]]); // [1, 2, 3]
 // basic case rest array.length = 0.
 // recursive step -  if 1st el is array then arr[0].concat(arr.slice(1)
 //                      (explanation : arr[0] lowers nesting to one, 
-//                                     arr.slice keep nesting level)
+//                                     arr.slice keep nesting levcel)
 //                   else if 1st el is not an array, then take 1st el,
 //                           wrap it to 1 level array and concat with
 //                           recursive on rest. rest is (slice(1))
@@ -28,6 +28,9 @@ function flatten(arr) {
     return [arr[0]].concat(flatten(arr.slice(1)))
   }
 }
+  
+
+
   
 /**************DO NOT MODIFY ANYTHING UNDER THIS LINE*****************/
 try {
