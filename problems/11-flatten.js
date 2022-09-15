@@ -28,7 +28,17 @@ function flatten(arr) {
     return [arr[0]].concat(flatten(arr.slice(1)))
   }
 }
-  
+const flatten12 = input => {
+  const result = [];
+  input.forEach(element => {
+    if (Array.isArray(element)) {
+      result.push(...flatten(element));
+    } else {
+      result.push(element);
+    }
+  });
+  return result;
+}
 
 
   

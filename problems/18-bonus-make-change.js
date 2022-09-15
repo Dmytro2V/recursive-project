@@ -53,10 +53,28 @@ solution so that it only calculates and compares all of the different
 combinations.
 ***********************************************************************/
 
-function greedyMakeChange(target, coins = [25, 10, 5, 1]) {
+function greedyMakeChange(target, coins = [25, 10, 5, 1], result = []) {
   // no tests for greedyMakeChange so make sure to test this on your own
   // your code here
+  if (coins.length === 0) return null
+  let max = Math.max(...coins);
+  if (max > target) {
+    coins.splice(coins.indexOf(max),1)    
+    return greedyMakeChange(target, coins, result)    
+  }  
+  let maxRepeats = Math.floor(target/max)
+  result.push(...Array(maxRepeats).fill(max))
+  let rest = target - maxRepeats * max 
+  if (rest > 0) return greedyMakeChange(rest, coins, result) 
+  if (rest === 0) return result
+  return 'some error'
 }
+console.log(greedyMakeChange(7));
+console.log(greedyMakeChange(21)); // [1, 10, 10]
+console.log(greedyMakeChange(75)); // [25, 25, 25]
+console.log(greedyMakeChange(33, [15, 3])); // [3, 15, 15]
+console.log(greedyMakeChange(34, [15, 3])); // null
+console.log(greedyMakeChange(24, [10, 7, 1])) // [7, 7, 10]
 
 function makeBetterChange(target, coins = [25, 10, 5, 1]) {
   // your code here
