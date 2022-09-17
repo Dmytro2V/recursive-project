@@ -13,15 +13,24 @@ permutations([1, 2, 3]) // [[1, 2, 3], [1, 3, 2],
 ***********************************************************************/
 
 // your code here
-/*function insToArr (arr, el) {
-
-  return arr[0].concat([el]).concat(arr.slice(1)
-}
-*/
 function permutations(arr) {
-
-  return permutations(arr)
+  if (arr.length === 0 || arr.length === 1) return [arr]; // base
+  let prevArr = permutations(arr.slice(0,-1)) // prev level 
+  let newEl = arr.slice(-1)
+  let newArr =[]
+  for (let i = 0; i < prevArr.length; i++) {  // all inner arrays
+    let innArr = prevArr[i];
+    for (let j = 0; j < innArr.length +1; j++) {// inside inner array all positions; arr.length = prev.arr.length     
+      newArr.push(innArr.slice(0,j).concat(newEl).concat(innArr.slice(j)))
+    }
+  }
+  return newArr;
 }
+console.log(permutations([]));
+console.log(permutations([1]));
+console.log(permutations([1, 2]));
+console.log(permutations([1, 2, 3]));
+console.log(permutations([1, 2, 3,4]));
 /**************DO NOT MODIFY ANYTHING UNDER THIS LINE*****************/
 try {
   module.exports = permutations;

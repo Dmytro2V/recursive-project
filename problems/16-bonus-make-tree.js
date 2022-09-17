@@ -65,32 +65,51 @@ fuction getAdress(Tree,parentId,) {
   if (parentId in Tree.keys) return 'Tree.' + parentId 
 }
 ***********************************************************************/
-let Tree = {
-  animals: {
-      mammals: {
-          dogs: {
-              chihuahua: {},
-              labrador: {}
-          },
-          cats: {
-              persian: {},
-              siamese: {}
-          }
-      }
+const makeTree = (categories, parentId, Tree = {}) => {
+  // your code here  
+  let levelParent = parentId;
+
+  for (let i = 0; i < categories.length; i++) {
+    let el = categories[i];
+    if (el.parent  === levelParent) { // found element with current parrent      
+      let newArray = categories.slice();
+      newArray.splice(i, 1) // removing element from array
+      let newParent = el.id
+      let newTree ={};
+      Tree[el.id] = makeTree(newArray, newParent, newTree);      
+    }
   }
+
+  return Tree;
 }
-console.log(Tree['animals']['mammals']);
-console.log(getAdress(Tree, 'animals'));
+const categories0 = [];
+const tree0 = makeTree(categories0, null, {});
+console.log('tree0, ', tree0);
 
-function getAdress(Tree, parentId,) {
-if (parentId in Tree) return parentId 
+const categories1 = [  { id: 'animals', 'parent': null }  ];
+const tree1 = makeTree(categories1, null);
+console.log('tree1, ', tree1);
 
+const categories2 = [
+  { id: 'animals', 'parent': null },
+  { id: 'mammals', 'parent': 'animals' }
+];
+const tree2 = makeTree(categories2, null);
+console.log('tree2, ', tree2);
 
-}
+const categories3 = [
+  { id: 'animals', 'parent': null },
+  { id: 'mammals', 'parent': 'animals' },
+  { id: 'cats', 'parent': 'mammals' },
+  { id: 'dogs', 'parent': 'mammals' },
+  { id: 'chihuahua', 'parent': 'dogs' },
+  { id: 'labrador', 'parent': 'dogs' },
+  { id: 'persian', 'parent': 'cats' },
+  { id: 'siamese', 'parent': 'cats' }
+];
 
-const makeTree = (categories, parent) => {
-  // your code here
-};
+const tree3 = makeTree(categories3, null);
+console.log('tree3, ', JSON.stringify(tree3, null,2));
 
 /**************DO NOT MODIFY ANYTHING UNDER THIS LINE*****************/
 try {
