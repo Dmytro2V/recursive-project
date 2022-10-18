@@ -57,6 +57,7 @@ function greedyMakeChange(target, coins = [25, 10, 5, 1], result = []) {
   // no tests for greedyMakeChange so make sure to test this on your own
   // your code here
   if (coins.length === 0) return null
+  
   let max = Math.max(...coins);
   if (max > target) {
     coins.splice(coins.indexOf(max),1)    
@@ -69,15 +70,45 @@ function greedyMakeChange(target, coins = [25, 10, 5, 1], result = []) {
   if (rest === 0) return result
   return 'some error'
 }
+/*
 console.log(greedyMakeChange(7));
 console.log(greedyMakeChange(21)); // [1, 10, 10]
 console.log(greedyMakeChange(75)); // [25, 25, 25]
 console.log(greedyMakeChange(33, [15, 3])); // [3, 15, 15]
 console.log(greedyMakeChange(34, [15, 3])); // null
 console.log(greedyMakeChange(24, [10, 7, 1])) // [7, 7, 10]
+*/
 
 function makeBetterChange(target, coins = [25, 10, 5, 1]) {
   // your code here
+  // coins.sort((a,b) => a - b) - if input is unsorted
+  
+  if (target <= 0) return null // reducing target, so base on target
+  if (coins.includes(target)) return [target] // last target = any coin
+  //  - Iterate over each coin.
+
+  let minChange = null //will be best case
+  
+  for (let i = 0; i < coins.length; i++){
+    //- Grab only one of that one coin and
+    let coin = coins[i]
+      
+    // recursively call `makeBetterChange` on the
+    // remainder using coins less than or equal to the current coin.
+    let changeR = makeBetterChange((target - coin), coins.slice(i))
+    
+    //- Add the single coin to the change returned by the recursive call. 
+    // This will be a possible solution, but maybe not the best one.
+    let posChange;
+    if (changeR) { // if do has solution
+      posChange = changeR.concat([coin]);      
+      // - Keep track of the best solution and
+      if (minChange === null ||posChange.length < minChange.length) minChange = posChange.slice();   
+    }
+  }
+  //return it at the end.
+  
+  return minChange
 }
 
 
