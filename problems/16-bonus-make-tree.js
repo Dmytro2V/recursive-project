@@ -65,7 +65,21 @@ fuction getAdress(Tree,parentId,) {
   if (parentId in Tree.keys) return 'Tree.' + parentId 
 }
 ***********************************************************************/
-const makeTree = (categories, parentId, Tree = {}) => {
+const makeTree = (categories, parent) => {
+  // your code here  
+  //if categories is very big , we can remove processed categories from list on every level.
+  // but probably filtering all is not much longer then removing every time.
+    
+  let levelTree = {}
+  categories.filter(categoryEl => categoryEl.parent===parent)
+            .forEach(levelCategoryEl => {
+              let newParent =  levelCategoryEl.id
+              levelTree[levelCategoryEl.id] = makeTree(categories, newParent);
+            })
+  return levelTree;
+}
+
+const makeTreeVersion1 = (categories, parentId, Tree = {}) => {
   // your code here  
   let levelParent = parentId;
 
